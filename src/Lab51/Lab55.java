@@ -1,0 +1,36 @@
+package Lab51;
+
+import java.io.*;
+import java.util.Scanner;
+
+public class Lab55 {
+public static void main(String[] args) throws IOException {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Введите имя файла=> ");
+    String fname = sc.nextLine();
+    try {
+        File f1 = new File(fname);
+        f1.createNewFile();
+        System.out.println("Полный путь файла: " + f1.getAbsolutePath());
+        System.out.print("Введите количество строк для записи в файл=> ");
+        int n = sc.nextInt();
+
+        DataOutputStream dOut =
+                new DataOutputStream(new FileOutputStream(f1));
+        sc.nextLine();
+        for (int i = 0; i < n; i++) {
+            System.out.print("Введите строку для записи в файл=> ");
+            String s = sc.nextLine();
+            dOut.writeUTF(s + "\n");
+        }
+        dOut.flush(); //дописывает несохраненные данные на диск
+        dOut.close(); //закрывает поток
+        DataInputStream dIn = new DataInputStream(new FileInputStream(f1));
+        while (true) {
+            System.out.println(dIn.readUTF());
+        }
+    }
+    catch (Exception e) {
+        System.out.println("" + e);
+    }
+}}
